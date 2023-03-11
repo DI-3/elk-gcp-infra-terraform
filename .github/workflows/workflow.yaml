@@ -1,0 +1,44 @@
+# Specify the agent and the steps to run the Build Steps here
+
+#Terraform typicl workflow includes - init, validate, plan and apply. These will be the steps we have configured here
+# Once the PR is approved then we merge it to the master and thats  when the Terraform Apply Occurs - this is to minimize the infra changes happening from the PR
+
+
+#PS 1. We need to make use of the Google Credentials, we can add the SA key to the Github and make use of it here
+
+name: 'Terraform CLI'
+
+on:
+  push:
+    branches:
+      - main 
+  pull_request:
+    
+
+jobs:
+  terraform:
+    name: "Terraform"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Set Up Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform init
+        run: terraform init
+        env:
+          GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS }}
+      
+      - name: Terraform plan
+        run: terraform plan
+        env:
+          GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS }}
+
+      - name: Terraform Apply
+        if: githu.ref == 'refs/heads/main' && github.event_name = 'push'
+        run: terraform apply -auto-approve
+        env:
+          GOOGLE_CREDENTIALS: ${{secrets.GOOGLE_CREDENTIALS }}
