@@ -27,15 +27,16 @@ resource "google_container_node_pool" "primary_nodes" {
         oauth_scopes = [
             "https://www.googleapis.com/auth/cloud-platform"
         ]
-    }
-    labels = {
-        env = var.project_id
-    }
+    
+        labels = {
+            env = var.project_id
+        }
 
-    # preemptible  = true
-    machine_type = "n1-standard-1"
-    tags         = ["gke-node", "${var.project_id}-gke"]
-    metadata = {
-      disable-legacy-endpoints = "true"
+        # preemptible  = true
+        machine_type = "n1-standard-1"
+        tags         = ["gke-node", "${var.project_id}-gke"]
+        metadata = {
+        disable-legacy-endpoints = "true"
+        }
     }
 }
