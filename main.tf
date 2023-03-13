@@ -4,22 +4,22 @@ variable "gke_num_nodes" {
 }
 
 #GKE Cluster
-# resource "google_container_cluster" "primary" {
-#     name = "${var.project_id}-gke"
-#     location = var.region
+resource "google_container_cluster" "primary" {
+    name = "${var.project_id}-gke"
+    location = "${var.region}-b"
 
 
-#     remove_default_node_pool = true
-#     initial_node_count = 1 
+    remove_default_node_pool = true
+    initial_node_count = 1 
 
-#     network = "universal-valve-bucket-373803-vpc"
-#     subnetwork = "universal-valve-bucket-373803-vpc-subnet"
-# }
+    network = "universal-valve-bucket-373803-vpc"
+    subnetwork = "universal-valve-bucket-373803-vpc-subnet"
+}
 
 
 resource "google_container_node_pool" "primary_nodes" {
     name = "${var.project_id}-gke"
-    location = "${var.region}-a"
+    location = "${var.region}-b"
     cluster = "${var.project_id}-gke"
     node_count = var.gke_num_nodes
 
