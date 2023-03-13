@@ -1,5 +1,5 @@
 variable "gke_num_nodes" {
-    default = 5
+    default = 3
     description = "number of gke nodes"
 }
 
