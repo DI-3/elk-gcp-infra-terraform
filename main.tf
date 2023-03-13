@@ -6,7 +6,7 @@ variable "gke_num_nodes" {
 #GKE Cluster
 resource "google_container_cluster" "primary" {
     name = "${var.project_id}-gke"
-    location = "${var.region}-b"
+    location = "${var.region}"
 
 
     remove_default_node_pool = true
